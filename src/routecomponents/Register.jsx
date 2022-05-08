@@ -20,11 +20,8 @@ export default function Register() {
                 navigate("/");
             })
             .catch(error => {
-                console.log("deu ruim", error);
-                if(error.response === 409){
-                    alert("Usuário já cadastrado!");
-                }
-                else alert("Erro ao cadastrar usuário!");
+                console.log(error);
+                alert(error.response.data);
                 setDisabled(false);
             });
         }

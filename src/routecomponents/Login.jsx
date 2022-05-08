@@ -6,22 +6,19 @@ import styled from 'styled-components';
 import Form from '../components/Form';
 import axios from 'axios';
 
-let setUserInfo = "";
-let disabled = false;
 
 export default function Login() {
-    const URL = "localhost:5000/sig-in";
-    /*
-    console.log("oi");
+    const URL = "http://localhost:5000/sign-in";
+
     const navigate = useNavigate();
     const [userInfo, setUserInfo] = useState({});
     const [disabled, setDisabled] = useState(false);
-    const { setUserData } = useContext(UserContext).userData; */
+    const { setUserData } = useContext(UserContext).userData;
 
-   /*  useEffect(() => {
+    useEffect(() => {
         if (localStorage.getItem('userData') !== null) {
             setUserData(JSON.parse(localStorage.getItem('userData')));
-            navigate("/hoje");
+            navigate("/history");
         }
         if (Object.keys(userInfo).length !== 0) {
             setDisabled(true);
@@ -29,18 +26,15 @@ export default function Login() {
                 .then((response) => {
                     localStorage.setItem('userData', JSON.stringify(response.data));
                     setUserData(response.data);
-                    navigate("/hoje");
+                    navigate("/history");
                 })
                 .catch(error => {
                     console.log(error);
-                    if (error.response.status === 401) {
-                        alert("Usuário ou senha incorretos!");
-                    }
-                    else alert("Erro ao fazer login");
+                    alert(error.response.data);
                     setDisabled(false);
                 });
         }
-    }, [userInfo, setUserData, navigate]); */
+    }, [userInfo, setUserData, navigate]);
 
     return (
         <Main>

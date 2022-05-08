@@ -8,7 +8,7 @@ export default function Form({ type, setUserInfo, disabled }) {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [passwordConfirm, setPasswordConfirm] = useState('');
+    const [passwordConfirmation, setPasswordConfirmation] = useState('');
 
     const regEx = {
         email: "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$",
@@ -18,7 +18,7 @@ export default function Form({ type, setUserInfo, disabled }) {
 
     function handleSubmit(e) {
         e.preventDefault();
-        type === "register" ? setUserInfo({ name, email, password, passwordConfirm }) : setUserInfo({ email, password });
+        type === "register" ? setUserInfo({ name, email, password, passwordConfirmation }) : setUserInfo({ email, password });
     }
 
     return (
@@ -30,7 +30,7 @@ export default function Form({ type, setUserInfo, disabled }) {
                 <input type="email" id="email" pattern={regEx.email} placeholder="E-mail" required value={email} onChange={e => setEmail(e.target.value)} />
                 <input type="password" id="password" pattern={regEx.password} placeholder="Senha" required value={password} onChange={e => setPassword(e.target.value)} />
                 {type === "register" ?
-                    <input type="password" id="passwordConfirm" pattern={regEx.password} placeholder="Confirme a senha" required value={passwordConfirm} onChange={e => setPasswordConfirm(e.target.value)} />
+                    <input type="password" id="passwordConfirmation" pattern={regEx.password} placeholder="Confirme a senha" required value={passwordConfirmation} onChange={e => setPasswordConfirmation(e.target.value)} />
                     : null}
                 <button type="submit">{disabled ? <ThreeDots color="var(--white-base)" height={40} width={80} /> : (type === "register" ? "Cadastrar" : "Entrar")}</button>
             </fieldset>
