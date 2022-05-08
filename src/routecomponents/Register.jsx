@@ -6,7 +6,7 @@ import Form from '../components/Form';
 import axios from 'axios';
 
 export default function Register() {
-    const URL = "localhost:5000/sign-up";
+    const URL = "http://localhost/sign-up";
     
     const navigate = useNavigate();
     const [userInfo, setUserInfo] = useState({});
@@ -20,8 +20,8 @@ export default function Register() {
                 navigate("/");
             })
             .catch(error => {
-                console.log(error);
-                if(error.response.status === 409){
+                console.log("deu ruim", error);
+                if(error.response === 409){
                     alert("Usuário já cadastrado!");
                 }
                 else alert("Erro ao cadastrar usuário!");
