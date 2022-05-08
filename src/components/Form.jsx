@@ -8,18 +8,17 @@ export default function Form({ type, setUserInfo, disabled }) {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [image, setImage] = useState('');
+    const [passwordConfirm, setPasswordConfirm] = useState('');
 
     const regEx = {
         email: "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$",
         password: "^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$",
         name: "^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$",
-        image: `(http)?s?:?([^"']*(?:png|jpg|jpeg|gif|png|svg))`
     };
 
     function handleSubmit(e) {
         e.preventDefault();
-        type === "register" ? setUserInfo({ email, password, name, image }) : setUserInfo({ email, password });
+        type === "register" ? setUserInfo({ name, email, password, passwordConfirm }) : setUserInfo({ email, password });
     }
 
     return (
@@ -31,7 +30,7 @@ export default function Form({ type, setUserInfo, disabled }) {
                 <input type="email" id="email" pattern={regEx.email} placeholder="E-mail" required value={email} onChange={e => setEmail(e.target.value)} />
                 <input type="password" id="password" pattern={regEx.password} placeholder="Senha" required value={password} onChange={e => setPassword(e.target.value)} />
                 {type === "register" ?
-                    <input type="url" id="image" pattern={regEx.image} placeholder="Confirme a senha" required value={image} onChange={e => setImage(e.target.value)} />
+                    <input type="password" id="passwordConfirm" pattern={regEx.password} placeholder="Confirme a senha" required value={passwordConfirm} onChange={e => setPasswordConfirm(e.target.value)} />
                     : null}
                 <button type="submit">{disabled ? <ThreeDots color="var(--white-base)" height={40} width={80} /> : (type === "register" ? "Cadastrar" : "Entrar")}</button>
             </fieldset>
@@ -63,12 +62,8 @@ const Forms = styled.form`
             background-color: ${(props => props.disabled ? 'var(--white-base)' : 'var(--white-base)')};
             color: ${(props => props.disabled ? 'var(--black-base)' : 'var(--black-base)')};
             
-            &::placeholder {
-                font-size: 20px;
-                line-height: 23px;
-
-                color: var(--black-base);
-            }
+            font-size: 20px;
+            line-height: 23px;
         }
 
         button {

@@ -6,8 +6,8 @@ import UserContext from "./contexts/UserContext";
 import Login from "./routecomponents/Login.jsx";
 import Register from "./routecomponents/Register";
 /* import Income from "./routecomponents/Income";
-import Outlay from "./routecomponents/Outlay";
-import History from "./routecomponents/History"; */
+import Outlay from "./routecomponents/Outlay"; */
+import History from "./routecomponents/History"; 
 import NotFound from "./routecomponents/NotFound";
 
 import './css/reset.css';
@@ -25,8 +25,8 @@ export default function App() {
                     <Route path="/" element={<Login />} />
                     <Route path="/register" element={<Register />} />
                     {/* <Route path="/income" element={<Income />} />
-                    <Route path="/outlay" element={<Outlay />} />
-                    <Route path="/history" element={<History />} />  */}
+                    <Route path="/outlay" element={<Outlay />} /> */}
+                    <Route path="/history" element={<History />} />  
                     <Route path="*" element={<NotFound />} />
                 </Routes>
             </BrowserRouter>

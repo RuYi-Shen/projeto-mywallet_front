@@ -5,12 +5,9 @@ import styled from 'styled-components';
 import Form from '../components/Form';
 import axios from 'axios';
 
-let setUserInfo = "";
-let disabled = false;
-
 export default function Register() {
-    /* const URL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up";
-
+    const URL = "localhost:5000/sign-up";
+    
     const navigate = useNavigate();
     const [userInfo, setUserInfo] = useState({});
     const [disabled, setDisabled] = useState(false);
@@ -32,7 +29,7 @@ export default function Register() {
             });
         }
     }, [userInfo, navigate]);
- */
+ 
     return (
         <Main>
             <h1>MyWallet</h1>
