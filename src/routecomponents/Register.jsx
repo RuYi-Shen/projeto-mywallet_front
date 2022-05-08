@@ -50,8 +50,10 @@ const Main = styled.main`
     height: 100vh;
     display: flex;
     flex-direction: column;
+    text-align: center;
     align-items: center;
-    padding: auto 24px;
+    justify-content: center;
+    padding: 0 24px;
     background-color: var(--purple-base);
 
     h1 {
@@ -63,6 +65,7 @@ const Main = styled.main`
 
     form {
         max-width: 430px;
+        margin: 32px 24px;
     }
 
     a {
