@@ -13,10 +13,12 @@ import icon_logout from '../assets/icon_logout.png';
 
 export default function History() {
     const navigate = useNavigate();
-        
+
     const userData = JSON.parse(localStorage.getItem('userData'));
 
     const [records, setRecords] = useState([]);
+    const [balance, setBalance] = useState(0);
+    const [balanceSign, setBalanceSign] = useState(1);
 
     const URL = "http://localhost:5000/history";
 
@@ -25,17 +27,27 @@ export default function History() {
         if (confirm) {
             localStorage.clear();
             navigate("/");
-        
+
             axios.delete(URL, {
                 userData
             })
-            .then(response => {
-                console.log(response.data);
-            })
-            .catch(error => {
-                console.log(error);
-            })
+                .then(response => {
+                    console.log(response.data);
+                })
+                .catch(error => {
+                    console.log(error);
+                })
         }
+    }
+
+    function calcBalance() {
+        let total = 0;
+        records.forEach(record => {
+                total += record.value*1;
+            }
+        )
+        setBalanceSign(Math.sign(total));
+        setBalance(Math.abs(total));
     }
 
     useEffect(() => {
@@ -50,18 +62,24 @@ export default function History() {
                 }
                 );
         }
-        else{
+        else {
             navigate("/");
         }
     }, [userData, navigate]);
+
+    useEffect(() => {
+        if (records) {
+            calcBalance();
+        }
+    }, [records]);
 
     return (
         <Main>
             <header>
                 <h2>Olá, {userData?.username}</h2>
-                <img src={icon_logout} alt="logout icon" onClick={logout}/>
+                <img src={icon_logout} alt="logout icon" onClick={logout} />
             </header>
-            <div className="history">{
+            <div className="history">{            
                 records?.length > 0 ? records.map((record) => {
                     return (
                         <Record key={record._id} record={record} />
@@ -70,7 +88,11 @@ export default function History() {
                     : <span className="null">Não há registros de entrada ou saída</span>
             }
             </div>
-            <Buttons>
+            <Buttons sign={balanceSign}>
+                {            
+                    records?.length > 0 ? 
+                    <div className="balance"><p>Saldo</p> <span>{balance.toFixed(2)}</span></div> : null
+                }
                 <button><Link to="/record?type=income"><img src={icon_plus} alt="plus icon" /><div>Nova entrada</div></Link></button>
                 <button><Link to="/record?type=outlay"><img src={icon_minus} alt="minus icon" /><div>Nova saída</div></Link></button>
             </Buttons>
@@ -121,6 +143,7 @@ const Main = styled.main`
         padding: 12px;
         border-radius: 5px;
         background-color: var(--white-base);
+        overflow: auto;
 
         span.null {
             height: 100%;
@@ -133,6 +156,7 @@ const Main = styled.main`
 
             color: #868686;
         }
+        
     }
 
     h2 {
@@ -149,7 +173,36 @@ const Buttons = styled.div`
     align-items: center;
     max-width: 430px;
     width: 100%;
+    position: relative;
     
+    div.balance {
+            position: absolute;
+            top: -45px;
+            left: 0px;
+            font-weight: 700;
+            font-size: 17px;
+            line-height: 20px;
+            height: 30px;
+            max-width: 430px;
+            border: 10px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 15px;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 5px;
+            color: var(--black-base);
+
+            span {
+                font-size: 17px;
+                line-height: 20px;
+                text-align: right;
+
+                color: ${props => props.sign === -1 ? 'var(--red-negative)' : 'var(--green-positive)'};
+            }
+    }
+
     button {
         width: 47%;
         height: 114px;
