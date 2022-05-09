@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useLocation } from "react-router-dom";
 
 import styled from 'styled-components';
-import Form from '../components/Form';
 import axios from 'axios';
 
 import RecordForm from '../components/RecordForm';
@@ -21,6 +20,8 @@ export default function Record() {
     }
     const query = useQuery();
     const type = query.get("type");
+
+console.log("loop")
 
     useEffect(() => {
         if (!userData) {
@@ -43,7 +44,7 @@ export default function Record() {
                 setDisabled(false);
             });
         }
-    }, [recordInfo, navigate]);
+    }, [recordInfo, userData.token, navigate]);
 
 
     return (

@@ -1,6 +1,5 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import UserContext from "../contexts/UserContext";
 
 import styled from 'styled-components';
 import axios from 'axios';
@@ -21,7 +20,7 @@ export default function History() {
 
     const URL = "http://localhost:5000/history";
     const logout_URL = "http://localhost:5000/log-out";
-    
+
 
     function logout() {
         const confirm = window.confirm("Deseja realmente sair?");
@@ -39,16 +38,6 @@ export default function History() {
         }
     }
 
-    function calcBalance() {
-        let total = 0;
-        records.forEach(record => {
-                total += record.value*1;
-            }
-        )
-        setBalanceSign(Math.sign(total));
-        setBalance(Math.abs(total));
-    }
-
     useEffect(() => {
         if (userData) {
             axios.get(URL, { headers: { Authorization: `Bearer ${userData.token}` } })
@@ -63,12 +52,17 @@ export default function History() {
         }
         else {
             navigate("/");
-        }
+        }// eslint-disable-next-line
     }, [navigate]);
 
     useEffect(() => {
         if (records) {
-            calcBalance();
+            let total = 0;
+            records.forEach(record => {
+                total += record.value * 1;
+            })
+            setBalanceSign(Math.sign(total));
+            setBalance(Math.abs(total));
         }
     }, [records]);
 
@@ -78,7 +72,7 @@ export default function History() {
                 <h2>Olá, {userData?.username}</h2>
                 <img src={icon_logout} alt="logout icon" onClick={logout} />
             </header>
-            <div className="history">{            
+            <div className="history">{
                 records?.length > 0 ? records.map((record) => {
                     return (
                         <Record key={record._id} record={record} />
@@ -88,9 +82,9 @@ export default function History() {
             }
             </div>
             <Buttons sign={balanceSign}>
-                {            
-                    records?.length > 0 ? 
-                    <div className="balance"><p>Saldo</p> <span>{balance.toFixed(2)}</span></div> : null
+                {
+                    records?.length > 0 ?
+                        <div className="balance"><p>Saldo</p> <span>{balance.toFixed(2)}</span></div> : null
                 }
                 <button><Link to="/record?type=income"><img src={icon_plus} alt="plus icon" /><div>Nova entrada</div></Link></button>
                 <button><Link to="/record?type=outlay"><img src={icon_minus} alt="minus icon" /><div>Nova saída</div></Link></button>
