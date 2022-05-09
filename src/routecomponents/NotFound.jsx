@@ -23,4 +23,10 @@ const Div = styled.div`
     text-align: center;
     justify-content: center;
     align-items: center;
+    color: var(--white-base);
+    font-size: 30px;
+
+    a {
+        text-decoration: underline;
+    }
 `;

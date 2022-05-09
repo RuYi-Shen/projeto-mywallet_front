@@ -44,6 +44,7 @@ const RecordDiv = styled.div`
 
         color: #C6C6C6;
     }
+
     .description {
         width: 100%;
         height: 100%;
@@ -54,6 +55,7 @@ const RecordDiv = styled.div`
         line-height: 19px;
         color: var(--black-base);
     }
+    
     .value {
         width: 110px;
         height: 100%;

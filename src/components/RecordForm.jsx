@@ -43,7 +43,6 @@ const Forms = styled.form`
 
     fieldset {
         
-
         input {
             width: 100%;
             height: 58px;

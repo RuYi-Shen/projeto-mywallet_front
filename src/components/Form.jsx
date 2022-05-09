@@ -49,7 +49,6 @@ const Forms = styled.form`
     width: 100%;
 
     fieldset {
-        
 
         input {
             width: 100%;
