@@ -11,17 +11,20 @@ export default function Form({ type, setRecordInfo, disabled }) {
 
     function handleSubmit(e) {
         e.preventDefault();
-        if (type === "outlay") { value = -value }
+        console.log(type, value);
         setRecordInfo({ value, description });
     }
 
     return (
         <Forms onSubmit={handleSubmit} disabled={disabled}>
             <fieldset disabled={disabled}>
-
-                <input type="number" id="value" placeholder="Valor" min="0" step="0.01" required value={value} onChange={e => setValue(e.target.value)} />
+                {(type === "income") ?
+                    <input type="number" id="value" placeholder="Valor" min="0" step="0.01" required value={value} onChange={e => setValue(e.target.value)} />
+                    :
+                    <input type="number" id="value" placeholder="Valor" max="0" step="0.01" required value={value} onChange={e => setValue(e.target.value)} />
+                }
                 <input type="text" id="description" placeholder="Descrição" required value={description} onChange={e => setDescription(e.target.value)} />
-                
+
                 <button type="submit">{disabled ? <ThreeDots color="var(--white-base)" height={40} width={80} /> : (type === "income" ? "Salvar entrada" : "Salvar saída")}</button>
             </fieldset>
         </Forms>
@@ -63,13 +66,20 @@ const Forms = styled.form`
             background-color: var(--purple-button);
             border-radius: 5px;
             display: flex;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
             font-weight: 700;
             font-size: 20px;
             line-height: 23px;
 
             color: var(--white-base);
+
+            div {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: auto;
+            }
 
             &:hover {
                 cursor: pointer;

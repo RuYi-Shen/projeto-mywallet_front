@@ -10,7 +10,7 @@ import RecordForm from '../components/RecordForm';
 
 export default function Record() {
     const URL = "http://localhost:5000/history";
-
+    const userData = JSON.parse(localStorage.getItem('userData'));
 
     const navigate = useNavigate();
     const [recordInfo, setRecordInfo] = useState({});
@@ -22,13 +22,20 @@ export default function Record() {
     const query = useQuery();
     const type = query.get("type");
 
-    /* useEffect(() => {
-        if(Object.keys(userInfo).length !== 0){
+    useEffect(() => {
+        if (!userData) {
+            navigate("/");
+        }
+    }, [userData, navigate]);
+
+    useEffect(() => {
+        if(Object.keys(recordInfo).length !== 0){
             setDisabled(true);
-            axios.post(URL, userInfo)
+            axios.post(URL, recordInfo, { headers: { Authorization: `Bearer ${userData.token}` } })
             .then((response) => {
-                alert(response.data);
-                navigate("/");
+                console.log(response);
+                alert(response.statusText);
+                navigate("/history");
             })
             .catch(error => {
                 console.log(error);
@@ -36,7 +43,8 @@ export default function Record() {
                 setDisabled(false);
             });
         }
-    }, [userInfo, navigate]); */
+    }, [recordInfo, navigate]);
+
 
     return (
         <Main>

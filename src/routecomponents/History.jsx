@@ -7,15 +7,39 @@ import axios from 'axios';
 
 import Record from '../components/Record';
 
+import icon_plus from '../assets/icon_plus.png';
+import icon_minus from '../assets/icon_minus.png';
+import icon_logout from '../assets/icon_logout.png';
+
 export default function History() {
-    const { userData } = useContext(UserContext);
+    const navigate = useNavigate();
+        
+    const userData = JSON.parse(localStorage.getItem('userData'));
 
     const [records, setRecords] = useState([]);
 
     const URL = "http://localhost:5000/history";
 
+    function logout() {
+        const confirm = window.confirm("Deseja realmente sair?");
+        if (confirm) {
+            localStorage.clear();
+            navigate("/");
+        
+            axios.delete(URL, {
+                userData
+            })
+            .then(response => {
+                console.log(response.data);
+            })
+            .catch(error => {
+                console.log(error);
+            })
+        }
+    }
+
     useEffect(() => {
-        if (userData.token) {
+        if (userData) {
             axios.get(URL, { headers: { Authorization: `Bearer ${userData.token}` } })
                 .then((response) => {
                     setRecords(response.data);
@@ -26,26 +50,29 @@ export default function History() {
                 }
                 );
         }
-    }, [userData]);
+        else{
+            navigate("/");
+        }
+    }, [userData, navigate]);
 
     return (
         <Main>
             <header>
-                <h2>Olá, {userData.username}</h2>
-                <h3>Histórico</h3>
+                <h2>Olá, {userData?.username}</h2>
+                <img src={icon_logout} alt="logout icon" onClick={logout}/>
             </header>
             <div className="history">{
-                records ? records.map((record) => {
+                records?.length > 0 ? records.map((record) => {
                     return (
                         <Record key={record._id} record={record} />
                     )
                 })
-                    : <span>Não há registros de entrada ou saída</span>
+                    : <span className="null">Não há registros de entrada ou saída</span>
             }
             </div>
             <Buttons>
-                <button><Link to="/record?type=income">Nova entrada</Link></button>
-                <button><Link to="/record?type=outlay">Nova saída</Link></button>
+                <button><Link to="/record?type=income"><img src={icon_plus} alt="plus icon" /><div>Nova entrada</div></Link></button>
+                <button><Link to="/record?type=outlay"><img src={icon_minus} alt="minus icon" /><div>Nova saída</div></Link></button>
             </Buttons>
         </Main>
     );
@@ -70,6 +97,15 @@ const Main = styled.main`
         display: flex;
         justify-content: space-between;
         align-items: center;
+
+        img {
+            width: 24px;
+            height: 24px;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
     }
 
 
@@ -86,6 +122,17 @@ const Main = styled.main`
         border-radius: 5px;
         background-color: var(--white-base);
 
+        span.null {
+            height: 100%;
+            max-width: 185px;
+            font-size: 20px;
+            line-height: 23px;
+            display: flex;
+            align-items: center;
+            text-align: center;
+
+            color: #868686;
+        }
     }
 
     h2 {
@@ -101,24 +148,42 @@ const Buttons = styled.div`
     justify-content: space-between;
     align-items: center;
     max-width: 430px;
+    width: 100%;
     
     button {
-        max-width: 156px;
+        width: 47%;
         height: 114px;
         border: none;
+        padding: 10px;
         background-color: var(--purple-button);
         border-radius: 5px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-weight: 700;
-        font-size: 20px;
-        line-height: 23px;
+        
         
         color: var(--white-base);
 
-        &:hover {
-            cursor: pointer;
+        a {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: start;
+            
+            
+            img {
+                width: 22px;
+                height: 22px;
+            }
+    
+    
+            div {
+                text-align: left;
+                max-width: 64px;
+                font-weight: 700;
+                font-size: 17px;
+                line-height: 20px;
+            }
         }
+
     }
 `

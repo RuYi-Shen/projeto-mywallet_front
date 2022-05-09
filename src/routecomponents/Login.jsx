@@ -17,9 +17,8 @@ export default function Login() {
 
     useEffect(() => {
         if (localStorage.getItem('userData') !== null) {
-            localStorage.clear();
             setUserData(JSON.parse(localStorage.getItem('userData')));
-            //navigate("/history");
+            navigate("/history");
         }
         if (Object.keys(userInfo).length !== 0) {
             setDisabled(true);
