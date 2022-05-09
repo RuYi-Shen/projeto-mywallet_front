@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-export default function Record({record, deleteRecord}) {
-    const { date, description, value, _id} = record;
+export default function Record({ record, deleteRecord }) {
+    const { date, description, value, _id } = record;
 
     return (
         <RecordDiv sign={Math.sign(value)}>

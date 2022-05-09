@@ -28,19 +28,19 @@ export default function Record() {
     }, [userData, navigate]);
 
     useEffect(() => {
-        if(Object.keys(recordInfo).length !== 0){
+        if (Object.keys(recordInfo).length !== 0) {
             setDisabled(true);
             axios.post(URL, recordInfo, { headers: { Authorization: `Bearer ${userData.token}` } })
-            .then((response) => {
-                console.log(response);
-                alert(response.statusText);
-                navigate("/history");
-            })
-            .catch(error => {
-                console.log(error);
-                alert(error.response.data);
-                setDisabled(false);
-            });
+                .then((response) => {
+                    console.log(response);
+                    alert(response.statusText);
+                    navigate("/history");
+                })
+                .catch(error => {
+                    console.log(error);
+                    alert(error.response.data);
+                    setDisabled(false);
+                });
         }
     }, [recordInfo, userData.token, navigate]);
 

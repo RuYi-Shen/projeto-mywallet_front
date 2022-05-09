@@ -7,32 +7,32 @@ import axios from 'axios';
 
 export default function Register() {
     const URL = "http://localhost:5000/sign-up";
-    
+
     const navigate = useNavigate();
     const [userInfo, setUserInfo] = useState({});
     const [disabled, setDisabled] = useState(false);
 
     useEffect(() => {
         localStorage.clear();
-        if(Object.keys(userInfo).length !== 0){
+        if (Object.keys(userInfo).length !== 0) {
             setDisabled(true);
             axios.post(URL, userInfo)
-            .then((response) => {
-                alert(response.data);
-                navigate("/");
-            })
-            .catch(error => {
-                console.log(error);
-                alert(error.response.data);
-                setDisabled(false);
-            });
+                .then((response) => {
+                    alert(response.data);
+                    navigate("/");
+                })
+                .catch(error => {
+                    console.log(error);
+                    alert(error.response.data);
+                    setDisabled(false);
+                });
         }
     }, [userInfo, navigate]);
- 
+
     return (
         <Main>
             <h1>MyWallet</h1>
-            <Form type="register" setUserInfo={setUserInfo} disabled={disabled}/>
+            <Form type="register" setUserInfo={setUserInfo} disabled={disabled} />
             <Link to="/">Já tem uma conta? Entre agora!</Link>
         </Main>
     )
