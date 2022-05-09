@@ -13,7 +13,6 @@ import icon_logout from '../assets/icon_logout.png';
 
 export default function History() {
     const navigate = useNavigate();
-
     const userData = JSON.parse(localStorage.getItem('userData'));
 
     const [records, setRecords] = useState([]);
@@ -21,6 +20,8 @@ export default function History() {
     const [balanceSign, setBalanceSign] = useState(1);
 
     const URL = "http://localhost:5000/history";
+    const logout_URL = "http://localhost:5000/log-out";
+    
 
     function logout() {
         const confirm = window.confirm("Deseja realmente sair?");
@@ -28,9 +29,7 @@ export default function History() {
             localStorage.clear();
             navigate("/");
 
-            axios.delete(URL, {
-                userData
-            })
+            axios.post(logout_URL, userData, { headers: { Authorization: `Bearer ${userData.token}` } })
                 .then(response => {
                     console.log(response.data);
                 })
@@ -65,7 +64,7 @@ export default function History() {
         else {
             navigate("/");
         }
-    }, [userData, navigate]);
+    }, [navigate]);
 
     useEffect(() => {
         if (records) {
