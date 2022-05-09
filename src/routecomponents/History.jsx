@@ -1,16 +1,61 @@
+import { useState, useEffect, useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import UserContext from "../contexts/UserContext";
+
 import styled from 'styled-components';
+import axios from 'axios';
+
 
 export default function History() {
+    const { userData } = useContext(UserContext);
+
+    const [records, setRecords] = useState([]);
+
+    const URL = "http://localhost:5000/history";
+
+    useEffect(() => {
+        if (userData.token) {
+            axios.get(URL, { headers: { Authorization: `Bearer ${userData.token}` } })
+                .then((response) => {
+                    setRecords(response.data);
+                    console.log(response.data);
+                }
+                )
+                .catch(error => {
+                    console.log(error);
+                }
+                );
+        }
+    }, [userData]);
+
     return (
         <Main>
             <header>
-                <h2>Olá, Fulano</h2>
+                <h2>Olá, {userData.username}</h2>
                 <h3>Histórico</h3>
             </header>
-            <div className="history">Não há registros de entrada ou saída</div>
+            <div className="history">{
+                records ? records.map((record) => {
+                    return (
+                        <div className="record" key={record._id}>
+                            <div className="date">
+                                <span>{record.date}</span>
+                            </div>
+                            <div className="description">
+                                <span>{record.description}</span>
+                            </div>
+                            <div className="value">
+                                <span>{record.value}</span>
+                            </div>
+                        </div>
+                    )
+                })
+                    : <span>Não há registros de entrada ou saída</span>
+            }
+            </div>
             <Buttons>
-                <button>Nova entrada</button>
-                <button>Nova saída</button>
+                <button><Link to="/">Nova entrada</Link></button>
+                <button><Link to="/">Nova saída</Link></button>
             </Buttons>
         </Main>
     );

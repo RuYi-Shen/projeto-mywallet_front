@@ -16,10 +16,9 @@ import './css/style.css';
 export default function App() {
 
     const [userData, setUserData] = useState({});
-    const [progress, setProgress] = useState(0);
 
     return (
-        <UserContext.Provider value={{userData:{userData, setUserData}, progress:{progress, setProgress}}}>
+        <UserContext.Provider value={{userData, setUserData}}>
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<Login />} />

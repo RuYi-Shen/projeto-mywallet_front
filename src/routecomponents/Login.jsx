@@ -13,12 +13,13 @@ export default function Login() {
     const navigate = useNavigate();
     const [userInfo, setUserInfo] = useState({});
     const [disabled, setDisabled] = useState(false);
-    const { setUserData } = useContext(UserContext).userData;
+    const { setUserData } = useContext(UserContext);
 
     useEffect(() => {
         if (localStorage.getItem('userData') !== null) {
+            localStorage.clear();
             setUserData(JSON.parse(localStorage.getItem('userData')));
-            navigate("/history");
+            //navigate("/history");
         }
         if (Object.keys(userInfo).length !== 0) {
             setDisabled(true);

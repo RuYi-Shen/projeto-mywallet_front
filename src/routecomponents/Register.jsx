@@ -17,6 +17,7 @@ export default function Register() {
             setDisabled(true);
             axios.post(URL, userInfo)
             .then((response) => {
+                alert(response.data);
                 navigate("/");
             })
             .catch(error => {
