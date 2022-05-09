@@ -5,6 +5,7 @@ import UserContext from "../contexts/UserContext";
 import styled from 'styled-components';
 import axios from 'axios';
 
+import Record from '../components/Record';
 
 export default function History() {
     const { userData } = useContext(UserContext);
@@ -36,17 +37,7 @@ export default function History() {
             <div className="history">{
                 records ? records.map((record) => {
                     return (
-                        <div className="record" key={record._id}>
-                            <div className="date">
-                                <span>{record.date}</span>
-                            </div>
-                            <div className="description">
-                                <span>{record.description}</span>
-                            </div>
-                            <div className="value">
-                                <span>{record.value}</span>
-                            </div>
-                        </div>
+                        <Record key={record._id} record={record} />
                     )
                 })
                     : <span>Não há registros de entrada ou saída</span>
@@ -84,12 +75,15 @@ const Main = styled.main`
 
     div.history {
         max-width: 430px;
+        width: 100%;
         height: calc(100vh - 31px - 80px - 114px);
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-start;
         margin: 15px 0;
+        padding: 12px;
+        border-radius: 5px;
         background-color: var(--white-base);
 
     }
