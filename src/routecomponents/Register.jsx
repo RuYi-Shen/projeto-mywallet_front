@@ -6,7 +6,7 @@ import Form from '../components/Form';
 import axios from 'axios';
 
 export default function Register() {
-    const URL = "http://localhost:5000/sign-up";
+    const URL = "https://git.heroku.com/rys-my-wallet.git/sign-up";
 
     const navigate = useNavigate();
     const [userInfo, setUserInfo] = useState({});

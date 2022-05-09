@@ -8,7 +8,7 @@ import axios from 'axios';
 import RecordForm from '../components/RecordForm';
 
 export default function Record() {
-    const URL = "http://localhost:5000/history";
+    const URL = "https://git.heroku.com/rys-my-wallet.git/history";
     const userData = JSON.parse(localStorage.getItem('userData'));
 
     const navigate = useNavigate();

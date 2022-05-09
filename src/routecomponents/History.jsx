@@ -18,8 +18,8 @@ export default function History() {
     const [balance, setBalance] = useState(0);
     const [balanceSign, setBalanceSign] = useState(1);
 
-    const URL = "http://localhost:5000/history";
-    const logout_URL = "http://localhost:5000/log-out";
+    const URL = "https://git.heroku.com/rys-my-wallet.git/history";
+    const logout_URL = "https://git.heroku.com/rys-my-wallet.git/log-out";
 
 
     function logout() {
