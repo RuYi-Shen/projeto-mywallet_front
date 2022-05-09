@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-export default function Record(record) {
-    const { date, description, value } = record.record;
+export default function Record({record, deleteRecord}) {
+    const { date, description, value, _id} = record;
 
     return (
         <RecordDiv sign={Math.sign(value)}>
@@ -13,6 +13,9 @@ export default function Record(record) {
             </div>
             <div className="value">
                 <span>{Math.abs(value).toFixed(2)}</span>
+            </div>
+            <div className="delete" onClick={() => deleteRecord(_id)}>
+                <span>X</span>
             </div>
         </RecordDiv>
     )
@@ -62,5 +65,19 @@ const RecordDiv = styled.div`
         text-align: right;
 
         color: ${props => props.sign === -1 ? 'var(--red-negative)' : 'var(--green-positive)'};
+    }
+
+    .delete {
+        width: 30px;
+
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        font-size: 16px;
+        line-height: 19px;
+        text-align: center;
+        color: #C6C6C6;
+
+        cursor: pointer;
     }
 `

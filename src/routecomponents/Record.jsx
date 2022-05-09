@@ -21,8 +21,6 @@ export default function Record() {
     const query = useQuery();
     const type = query.get("type");
 
-console.log("loop")
-
     useEffect(() => {
         if (!userData) {
             navigate("/");

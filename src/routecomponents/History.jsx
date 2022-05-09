@@ -38,17 +38,35 @@ export default function History() {
         }
     }
 
-    useEffect(() => {
-        if (userData) {
-            axios.get(URL, { headers: { Authorization: `Bearer ${userData.token}` } })
-                .then((response) => {
-                    setRecords(response.data);
+    const deleteRecord = (id) => {
+        const confirm = window.confirm("Deseja realmente excluir este registro?");
+        if (confirm) {
+            axios.delete(`${URL}/${id}`, { headers: { Authorization: `Bearer ${userData.token}` } })
+                .then(response => {
+                    console.log(response.data);
+                    getRecords();
                 }
                 )
                 .catch(error => {
                     console.log(error);
                 }
-                );
+                )
+        }
+    }
+
+    function getRecords() {
+        axios.get(URL, { headers: { Authorization: `Bearer ${userData.token}` } })
+            .then((response) => {
+                setRecords(response.data);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }
+
+    useEffect(() => {
+        if (userData) {
+            getRecords();
         }
         else {
             navigate("/");
@@ -75,7 +93,7 @@ export default function History() {
             <div className="history">{
                 records?.length > 0 ? records.map((record) => {
                     return (
-                        <Record key={record._id} record={record} />
+                        <Record key={record._id} record={record} deleteRecord={deleteRecord} />
                     )
                 })
                     : <span className="null">Não há registros de entrada ou saída</span>
