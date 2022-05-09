@@ -7,6 +7,7 @@ import Login from "./routecomponents/Login.jsx";
 import Register from "./routecomponents/Register";
 /* import Income from "./routecomponents/Income";
 import Outlay from "./routecomponents/Outlay"; */
+import Record from "./routecomponents/Record";
 import History from "./routecomponents/History"; 
 import NotFound from "./routecomponents/NotFound";
 
@@ -25,7 +26,8 @@ export default function App() {
                     <Route path="/register" element={<Register />} />
                     {/* <Route path="/income" element={<Income />} />
                     <Route path="/outlay" element={<Outlay />} /> */}
-                    <Route path="/history" element={<History />} />  
+                    <Route path="/history" element={<History />} /> 
+                    <Route path="/record" element={<Record />} /> 
                     <Route path="*" element={<NotFound />} />
                 </Routes>
             </BrowserRouter>

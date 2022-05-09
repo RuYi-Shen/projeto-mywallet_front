@@ -18,7 +18,6 @@ export default function History() {
             axios.get(URL, { headers: { Authorization: `Bearer ${userData.token}` } })
                 .then((response) => {
                     setRecords(response.data);
-                    console.log(response.data);
                 }
                 )
                 .catch(error => {
@@ -54,8 +53,8 @@ export default function History() {
             }
             </div>
             <Buttons>
-                <button><Link to="/">Nova entrada</Link></button>
-                <button><Link to="/">Nova saída</Link></button>
+                <button><Link to="/record?type=income">Nova entrada</Link></button>
+                <button><Link to="/record?type=outlay">Nova saída</Link></button>
             </Buttons>
         </Main>
     );
